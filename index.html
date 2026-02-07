@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 💌</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    height:100vh;
+    background: linear-gradient(135deg,#ffc1cc,#ffd6df);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* PAGE */
+.page{
+    display:none;
+    width:95%;
+    max-width:420px; /* BIGGER CARD */
+}
+
+.page.active{
+    display:block;
+}
+
+/* CARD */
+.card{
+    background:white;
+    border-radius:26px;
+    padding:40px 32px; /* MORE SPACE */
+    text-align:center;
+    box-shadow:0 30px 60px rgba(0,0,0,0.18);
+    animation:fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* TEXT */
+h1{
+    color:#ff4f81;
+    font-size:2.1rem;
+    margin-bottom:20px;
+}
+
+p{
+    color:#666;
+    font-size:1rem;
+    margin-bottom:32px;
+    line-height:1.5;
+}
+
+/* BUTTONS */
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:22px;
+}
+
+button{
+    padding:14px 34px;
+    border:none;
+    border-radius:32px;
+    font-size:1rem;
+    cursor:pointer;
+    transition:0.2s ease;
+}
+
+.yes{
+    background:#ff4f81;
+    color:white;
+    box-shadow:0 12px 28px rgba(255,79,129,0.45);
+}
+
+.no{
+    background:#eee;
+    color:#555;
+    position:relative;
+}
+
+/* HEART SECTION */
+.heart-container{
+    position:relative;
+    width:180px;
+    height:170px;
+    margin:32px auto;
+}
+
+.heart{
+    position:absolute;
+    width:90px;
+    height:90px;
+    background:#ff4f81;
+    transform:rotate(-45deg);
+    top:40px;
+    left:45px;
+    animation:pop 1.5s forwards;
+}
+
+.heart::before,
+.heart::after{
+    content:'';
+    position:absolute;
+    width:90px;
+    height:90px;
+    background:#ff4f81;
+    border-radius:50%;
+}
+
+.heart::before{
+    top:-45px;
+    left:0;
+}
+
+.heart::after{
+    left:45px;
+    top:0;
+}
+
+@keyframes pop{
+    0%{transform:scale(0.5) rotate(-45deg);}
+    100%{transform:scale(1.15) rotate(-45deg);}
+}
+
+.photo{
+    width:120px;
+    border-radius:18px;
+    position:absolute;
+    top:25px;
+    left:30px;
+    opacity:0;
+    animation:fadePhoto 1s forwards 1.3s;
+}
+
+@keyframes fadePhoto{
+    to{opacity:1;}
+}
+
+/* FORM */
+textarea{
+    width:100%;
+    border-radius:16px;
+    padding:14px;
+    border:1px solid #ddd;
+    resize:none;
+    font-size:0.95rem;
+}
+
+.submit{
+    margin-top:18px;
+    width:100%;
+    background:#ff4f81;
+    color:white;
+    padding:14px;
+    border-radius:30px;
+    border:none;
+    font-size:1rem;
+    box-shadow:0 12px 28px rgba(255,79,129,0.45);
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+    <div class="card">
+        <h1>Will you be my Valentine? 💗</h1>
+        <p>I was really hoping you'd say yes.</p>
+        <div class="buttons">
+            <button class="yes" onclick="goYes()">Yes 💕</button>
+            <button class="no" onclick="goNo()">No</button>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+    <div class="card">
+        <h1>Are you sure? 🥺</h1>
+        <p>I’d love it if you reconsider.</p>
+        <div class="buttons">
+            <button class="yes" onclick="goYes()">Okay… 💞</button>
+            <button class="no" id="runaway">Still no</button>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+    <div class="card">
+        <h1>You said yes 💖</h1>
+
+        <div class="heart-container">
+            <div class="heart"></div>
+            <img src="your-photo.jpg" class="photo">
+        </div>
+
+        <p>This honestly made my day.  
+        Leave me a message?</p>
+
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <textarea name="message" rows="4" placeholder="Type anything you want 💌" required></textarea>
+            <button class="submit">Send 💗</button>
+        </form>
+    </div>
+</div>
+
+<script>
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
+const page3 = document.getElementById("page3");
+
+function goNo(){
+    page1.classList.remove("active");
+    page2.classList.add("active");
+}
+
+function goYes(){
+    page1.classList.remove("active");
+    page2.classList.remove("active");
+    page3.classList.add("active");
+}
+
+const runaway = document.getElementById("runaway");
+if(runaway){
+    runaway.addEventListener("mouseover", ()=>{
+        const x = Math.random()*200 - 100;
+        const y = Math.random()*200 - 100;
+        runaway.style.transform = `translate(${x}px, ${y}px)`;
+    });
+}
+</script>
+
+</body>
+</html>
